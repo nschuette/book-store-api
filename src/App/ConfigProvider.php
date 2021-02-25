@@ -6,6 +6,7 @@ namespace App;
 
 class ConfigProvider
 {
+    /** @return mixed[] */
     public function __invoke(): array
     {
         return [
@@ -13,14 +14,14 @@ class ConfigProvider
         ];
     }
 
+    /** @return mixed[] */
     public function getDependencies(): array
     {
         return [
             'invokables' => [
                 Handler\PingHandler::class => Handler\PingHandler::class,
             ],
-            'factories'  => [
-            ],
+            'factories'  => [],
         ];
     }
 }
