@@ -1,0 +1,15 @@
+<?php
+
+return [
+    'doctrine' => [
+        'connection' => [
+            'driverClass' => Doctrine\DBAL\Driver\PDO\MySQL\Driver::class,
+            'host' => '',
+            'port' => 3306,
+            'user' => '',
+            'password' => '',
+            'dbname' => '',
+            'charset' => 'utf8mb4',
+        ],
+    ],
+];

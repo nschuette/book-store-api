@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Handler\PingHandler;
+use Psr\Container\ContainerInterface;
+
 class ConfigProvider
 {
     /** @return mixed[] */
@@ -18,10 +21,9 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
-            'invokables' => [
-                Handler\PingHandler::class => Handler\PingHandler::class,
+            'factories'  => [
+                Handler\PingHandler::class => static fn (ContainerInterface $container): PingHandler => new PingHandler(),
             ],
-            'factories'  => [],
         ];
     }
 }
