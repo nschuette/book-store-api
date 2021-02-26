@@ -28,10 +28,14 @@
         "laminas/laminas-zendframework-bridge": "^1.0",
         "mezzio/mezzio": "^3.2.1",
         "mezzio/mezzio-helpers": "^5.3",
-        "mezzio/mezzio-laminasrouter": "^3.0.1"
+        "mezzio/mezzio-laminasrouter": "^3.0.1",
+        "psr/container": "^1.0",
+        "psr/http-message": "^1.0",
+        "psr/http-server-handler": "^1.0"
     },
     "require-dev": {
         "doctrine/coding-standard": "^8.2",
+        "maglnet/composer-require-checker": "^3.1",
         "phpstan/phpstan": "^0.12.79",
         "phpstan/phpstan-deprecation-rules": "^0.12.6",
         "phpstan/phpstan-phpunit": "^0.12.17",
@@ -54,12 +58,14 @@
         "check": [
             "@cs-check",
             "@test",
-            "@phpstan"
+            "@phpstan",
+            "@require-checker"
         ],
         "phpstan": "phpstan analyse --ansi",
         "clear-config-cache": "php bin/clear-config-cache.php",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
+        "require-checker": "composer-require-checker --config-file=./composer-require-checker.json",
         "serve": "php -S 0.0.0.0:8080 -t public/",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"

@@ -22,7 +22,9 @@ class ConfigProvider
     {
         return [
             'factories'  => [
-                Handler\PingHandler::class => static fn (ContainerInterface $container): PingHandler => new PingHandler(),
+                Handler\PingHandler::class => static function (ContainerInterface $container): PingHandler {
+                    return new PingHandler();
+                },
             ],
         ];
     }
