@@ -1,0 +1,17 @@
+version: '3.6'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: "bookstore_db"
+      MYSQL_USER: "bookdev"
+      MYSQL_PASSWORD: "bookdev"
+      MYSQL_ROOT_PASSWORD: "bookdev"
+      TZ: Europe/Berlin
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8000:8080
