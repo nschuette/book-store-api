@@ -1,0 +1,33 @@
+version: '3.6'
+
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - default
+    ports:
+      - 8080:80
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: "bookstore_db"
+      MYSQL_USER: "bookdev"
+      MYSQL_PASSWORD: "bookdev"
+      MYSQL_ROOT_PASSWORD: "bookdev"
+      TZ: Europe/Berlin
+    networks:
+      - default
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8000:8080
+    networks:
+      - default
