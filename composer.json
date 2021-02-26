@@ -16,15 +16,18 @@
     },
     "require": {
         "php": "^8.0",
+        "ext-json": "*",
+        "ext-pdo": "*",
         "composer/package-versions-deprecated": "^1.10.99",
+        "doctrine/dbal": "^3.0",
         "laminas/laminas-component-installer": "^2.1.2",
         "laminas/laminas-config-aggregator": "^1.2",
         "laminas/laminas-diactoros": "^2.3.0",
+        "laminas/laminas-servicemanager": "^3.4",
         "laminas/laminas-stdlib": "^3.2.1",
         "laminas/laminas-zendframework-bridge": "^1.0",
         "mezzio/mezzio": "^3.2.1",
         "mezzio/mezzio-helpers": "^5.3",
-        "laminas/laminas-servicemanager": "^3.4",
         "mezzio/mezzio-laminasrouter": "^3.0.1"
     },
     "require-dev": {
@@ -36,7 +39,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/App/"
+            "App\\": "src/"
         }
     },
     "autoload-dev": {
@@ -45,7 +48,6 @@
         }
     },
     "scripts": {
-        "mezzio": "mezzio --ansi",
         "check": [
             "@cs-check",
             "@test"
