@@ -1,0 +1,73 @@
+{
+    "name": "nschuette/bookstore-api",
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laminas": {
+            "component-whitelist": [
+                "mezzio/mezzio",
+                "mezzio/mezzio-helpers",
+                "mezzio/mezzio-router",
+                "laminas/laminas-httphandlerrunner",
+                "mezzio/mezzio-laminasrouter"
+            ]
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "composer/package-versions-deprecated": "^1.10.99",
+        "doctrine/dbal": "^3.0",
+        "laminas/laminas-component-installer": "^2.1.2",
+        "laminas/laminas-config-aggregator": "^1.2",
+        "laminas/laminas-diactoros": "^2.3.0",
+        "laminas/laminas-servicemanager": "^3.4",
+        "laminas/laminas-stdlib": "^3.2.1",
+        "laminas/laminas-zendframework-bridge": "^1.0",
+        "mezzio/mezzio": "^3.2.1",
+        "mezzio/mezzio-helpers": "^5.3",
+        "mezzio/mezzio-laminasrouter": "^3.0.1",
+        "psr/container": "^1.0",
+        "psr/http-message": "^1.0",
+        "psr/http-server-handler": "^1.0"
+    },
+    "require-dev": {
+        "doctrine/coding-standard": "^8.2",
+        "maglnet/composer-require-checker": "^3.1",
+        "phpstan/phpstan": "^0.12.79",
+        "phpstan/phpstan-deprecation-rules": "^0.12.6",
+        "phpstan/phpstan-phpunit": "^0.12.17",
+        "phpstan/phpstan-strict-rules": "^0.12.9",
+        "phpunit/phpunit": "^9.3.7",
+        "roave/security-advisories": "dev-master",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AppTest\\": "test/AppTest/"
+        }
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test",
+            "@phpstan",
+            "@require-checker"
+        ],
+        "phpstan": "phpstan analyse --ansi",
+        "clear-config-cache": "php bin/clear-config-cache.php",
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "require-checker": "composer-require-checker --config-file=./composer-require-checker.json",
+        "serve": "php -S 0.0.0.0:8080 -t public/",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    }
+}
