@@ -6,39 +6,79 @@ namespace App\Dto;
 
 final class Book
 {
-    public int $id;
+    private int $id;
 
-    public Author $author;
+    private string $isbn;
 
-    public Genre $genre;
+    private string $title;
 
-    public string $isbn;
+    private Author $author;
 
-    public string $title;
+    private Genre $genre;
 
-    public ?string $description = null;
+    private int $year;
 
-    public int $year;
+    private ?string $description;
 
-    public Price $price;
+    private Price $price;
 
     public function __construct(
         int $id,
-        Author $author,
-        Genre $genre,
         string $isbn,
         string $title,
-        ?string $description,
+        Author $author,
+        Genre $genre,
         int $year,
+        ?string $description,
         Price $price
     ) {
         $this->id          = $id;
-        $this->author      = $author;
-        $this->genre       = $genre;
         $this->isbn        = $isbn;
         $this->title       = $title;
-        $this->description = $description;
+        $this->author      = $author;
+        $this->genre       = $genre;
         $this->year        = $year;
+        $this->description = $description;
         $this->price       = $price;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getIsbn(): string
+    {
+        return $this->isbn;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function getAuthor(): Author
+    {
+        return $this->author;
+    }
+
+    public function getGenre(): Genre
+    {
+        return $this->genre;
+    }
+
+    public function getYear(): int
+    {
+        return $this->year;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function getPrice(): Price
+    {
+        return $this->price;
     }
 }

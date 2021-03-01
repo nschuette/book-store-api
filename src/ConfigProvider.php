@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Handler\BookHandler;
 use App\Handler\BookListHandler;
 use App\Handler\PingHandler;
-use App\Query\GetBookList;
-use Doctrine\DBAL\Connection;
+use App\Repository\BookRepository;
 use Psr\Container\ContainerInterface;
 
 class ConfigProvider
@@ -31,7 +31,13 @@ class ConfigProvider
 
                 Handler\BookListHandler::class => static function (ContainerInterface $container): BookListHandler {
                     return new BookListHandler(
-                        new GetBookList($container->get(Connection::class))
+                        $container->get(BookRepository::class)
+                    );
+                },
+
+                Handler\BookHandler::class => static function (ContainerInterface $container): BookHandler {
+                    return new BookHandler(
+                        $container->get(BookRepository::class),
                     );
                 },
             ],

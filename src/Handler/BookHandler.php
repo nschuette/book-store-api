@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Handler;
 
 use App\Dto\Book;
+use App\Exception\BookNotFound;
 use App\Repository\BookRepository;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-use function array_map;
-use function sprintf;
+use function time;
 
-class BookListHandler implements RequestHandlerInterface
+class BookHandler implements RequestHandlerInterface
 {
     private BookRepository $bookRepository;
 
@@ -25,16 +25,21 @@ class BookListHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $numberOfBooks = $this->bookRepository->getNumberOfBooks();
-        $books         = $this->bookRepository->getAll();
+        $bookId = (int) $request->getAttribute('bookId');
 
-        return new JsonResponse([
-            'count' => $numberOfBooks,
-            'books' => array_map(
-                static fn (Book $book): array => self::formatBook($book),
-                $books
-            ),
-        ]);
+        try {
+            $book = $this->bookRepository->getById($bookId);
+        } catch (BookNotFound $exception) {
+            return new JsonResponse([
+                'timestamp' => time(),
+                'status'    => 404,
+                'error'     => $exception->getMessage(),
+            ], 404);
+        }
+
+        return new JsonResponse(
+            self::formatBook($book)
+        );
     }
 
     /**
@@ -56,15 +61,16 @@ class BookListHandler implements RequestHandlerInterface
                 'name' => $book->getGenre()->getName(),
             ],
             'year' => $book->getYear(),
+            'description' => $book->getDescription(),
             'price' => [
                 'total' => $book->getPrice()->getTotal(),
                 'tax'   => $book->getPrice()->getTax(),
                 'currency' => $book->getPrice()->getCurrency(),
             ],
             'links' => [
-                'detail' => [
+                'list' => [
                     'method' => 'GET',
-                    'href' => sprintf('/api/books/%d', $book->getId()),
+                    'href' => '/api/books',
                 ],
             ],
         ];

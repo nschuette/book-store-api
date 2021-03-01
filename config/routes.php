@@ -10,4 +10,5 @@ return static function (Application $app, MiddlewareFactory $factory, ContainerI
     $app->get('/api/ping', App\Handler\PingHandler::class, 'api.ping');
 
     $app->get('/api/books', App\Handler\BookListHandler::class, 'api.books');
+    $app->get('/api/books/:bookId', App\Handler\BookHandler::class, 'api.books.book');
 };
