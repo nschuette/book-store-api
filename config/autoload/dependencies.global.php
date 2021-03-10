@@ -5,7 +5,11 @@ declare(strict_types=1);
 return [
     'dependencies' => [
         'factories'  => [
-            Doctrine\DBAL\Connection::class => App\Infrastructure\ConnectionFactory::class
+            // Infrastructure
+            Doctrine\DBAL\Connection::class => App\Infrastructure\ConnectionFactory::class,
+
+            // Repositories
+            App\Repository\BookRepository::class => App\Repository\BookRepositoryFactory::class,
         ],
     ],
 ];
