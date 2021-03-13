@@ -6,8 +6,10 @@ namespace App;
 
 use App\Handler\BookHandler;
 use App\Handler\BookListHandler;
+use App\Handler\BookReviewHandler;
 use App\Handler\PingHandler;
 use App\Repository\BookRepository;
+use App\Repository\BookReviewRepository;
 use Psr\Container\ContainerInterface;
 
 class ConfigProvider
@@ -38,6 +40,12 @@ class ConfigProvider
                 Handler\BookHandler::class => static function (ContainerInterface $container): BookHandler {
                     return new BookHandler(
                         $container->get(BookRepository::class),
+                    );
+                },
+                Handler\BookReviewHandler::class => static function (ContainerInterface $container): BookReviewHandler {
+                    return new BookReviewHandler(
+                        $container->get(BookRepository::class),
+                        $container->get(BookReviewRepository::class)
                     );
                 },
             ],

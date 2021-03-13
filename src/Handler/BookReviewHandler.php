@@ -6,16 +6,18 @@ namespace App\Handler;
 
 use App\Exception\BookNotFound;
 use App\Repository\BookRepository;
-use App\Response\BookResponseFactory;
+use App\Repository\BookReviewRepository;
+use App\Response\BookReviewResponseFactory;
 use App\Response\ErrorResponseFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class BookHandler implements RequestHandlerInterface
+class BookReviewHandler implements RequestHandlerInterface
 {
     public function __construct(
-        private BookRepository $bookRepository
+        private BookRepository $bookRepository,
+        private BookReviewRepository $bookReviewRepository,
     ) {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -28,6 +30,15 @@ class BookHandler implements RequestHandlerInterface
             return ErrorResponseFactory::createFromException($exception, 404);
         }
 
-        return BookResponseFactory::create($book);
+        $ratingAverage = $this->bookReviewRepository->getAverageRatingByBookId($book->getId());
+        $reviewCount   = $this->bookReviewRepository->getNumberOfReviewsByBookId($book->getId());
+        $bookReviews   = $this->bookReviewRepository->getByBookId($book->getId());
+
+        return BookReviewResponseFactory::create(
+            $ratingAverage,
+            $reviewCount,
+            $book,
+            $bookReviews
+        );
     }
 }

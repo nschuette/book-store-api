@@ -7,7 +7,7 @@ namespace App\Repository;
 use Doctrine\DBAL\Connection;
 use Psr\Container\ContainerInterface;
 
-class BookReviewRepositoryFactory
+final class BookReviewRepositoryFactory
 {
     public function __invoke(ContainerInterface $container): BookReviewRepository
     {
