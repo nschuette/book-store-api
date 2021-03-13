@@ -16,12 +16,9 @@ use function array_map;
 
 final class BookRepository
 {
-    private Connection $connection;
-
-    public function __construct(Connection $connection)
-    {
-        $this->connection = $connection;
-    }
+    public function __construct(
+        private Connection $connection
+    ) {}
 
     public function getById(int $bookId): Book
     {
@@ -54,14 +51,13 @@ final class BookRepository
             throw BookNotFound::byBookId($bookId);
         }
 
-        return self::mapResultToDto(
-            $result->fetchAssociative()
-        );
+        $row = $result->fetchAssociative();
+        assert(is_array($row) === true);
+
+        return self::mapResultToDto($row);
     }
 
-    /**
-     * @return Book[]
-     */
+    /** @return array<int, Book> */
     public function getAll(): array
     {
         $result = $this->connection->executeQuery(
@@ -104,30 +100,28 @@ final class BookRepository
         return (int) $result->fetchOne();
     }
 
-    /**
-     * @param mixed[] $row
-     */
-    private static function mapResultToDto(array $row): Book
+    /** @param mixed[] $result */
+    private static function mapResultToDto(array $result): Book
     {
         return new Book(
-            (int) $row['book_id'],
-            $row['isbn'],
-            $row['title'],
+            (int) $result['book_id'],
+            $result['isbn'],
+            $result['title'],
             new Author(
-                (int) $row['author_id'],
-                $row['author_firstname'],
-                $row['author_lastname']
+                (int) $result['author_id'],
+                $result['author_firstname'],
+                $result['author_lastname']
             ),
             new Genre(
-                (int) $row['genre_id'],
-                $row['genre_name']
+                (int) $result['genre_id'],
+                $result['genre_name']
             ),
-            (int) $row['year'],
-            $row['description'],
+            (int) $result['year'],
+            $result['description'],
             new Price(
-                (float) $row['price_total'],
-                (float) $row['price_tax'],
-                $row['price_currency']
+                (float) $result['price_total'],
+                (float) $result['price_tax'],
+                $result['price_currency']
             )
         );
     }

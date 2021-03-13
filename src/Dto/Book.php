@@ -6,41 +6,16 @@ namespace App\Dto;
 
 final class Book
 {
-    private int $id;
-
-    private string $isbn;
-
-    private string $title;
-
-    private Author $author;
-
-    private Genre $genre;
-
-    private int $year;
-
-    private ?string $description;
-
-    private Price $price;
-
     public function __construct(
-        int $id,
-        string $isbn,
-        string $title,
-        Author $author,
-        Genre $genre,
-        int $year,
-        ?string $description,
-        Price $price
-    ) {
-        $this->id          = $id;
-        $this->isbn        = $isbn;
-        $this->title       = $title;
-        $this->author      = $author;
-        $this->genre       = $genre;
-        $this->year        = $year;
-        $this->description = $description;
-        $this->price       = $price;
-    }
+        private int $id,
+        private string $isbn,
+        private string $title,
+        private Author $author,
+        private Genre $genre,
+        private int $year,
+        private ?string $description,
+        private Price $price
+    ) {}
 
     public function getId(): int
     {

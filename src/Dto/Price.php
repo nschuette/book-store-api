@@ -6,18 +6,11 @@ namespace App\Dto;
 
 final class Price
 {
-    private float $total;
-
-    private float $tax;
-
-    private string $currency;
-
-    public function __construct(float $total, float $tax, string $currency)
-    {
-        $this->total    = $total;
-        $this->tax      = $tax;
-        $this->currency = $currency;
-    }
+    public function __construct(
+        private float $total,
+        private float $tax,
+        private string $currency
+    ) {}
 
     public function getTotal(): float
     {
