@@ -7,7 +7,7 @@ use Mezzio\MiddlewareFactory;
 use Psr\Container\ContainerInterface;
 
 return static function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
-    $app->get('/api/ping', App\Handler\PingHandler::class, 'api.ping');
+    $app->get('/api/ping', App\Handler\PingHandler::class);
 
     $app->get(
         '/api/books',
@@ -28,6 +28,19 @@ return static function (Application $app, MiddlewareFactory $factory, ContainerI
         '/api/books/:bookId/reviews',
         [
             App\Handler\BookReviewList\BookReviewListHandler::class,
+        ]
+    );
+
+    $app->post(
+        '/api/cart',
+        [
+            App\Handler\CreateCart\CreateCartHandler::class,
+        ]
+    );
+    $app->get(
+        '/api/cart/:cartId',
+        [
+            App\Handler\CartDetail\CartDetailHandler::class,
         ]
     );
 };
