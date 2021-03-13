@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Dto\BookReview;
+use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Types;
+
+use function array_map;
 
 final class BookReviewRepository
 {
@@ -43,7 +46,7 @@ final class BookReviewRepository
     {
         $result = $this->connection->executeQuery(
             <<<'SQL'
-                SELECT avg(br.rating)
+                SELECT AVG(br.rating)
                 FROM book_reviews br
                 WHERE br.book_id = :bookId
                 SQL,
@@ -54,7 +57,22 @@ final class BookReviewRepository
         return (float) $result->fetchOne();
     }
 
-    /** @param array<string, mixed> $result */
+    public function getNumberOfReviewsByBookId(int $bookId): int
+    {
+        $result = $this->connection->executeQuery(
+            <<<'SQL'
+                SELECT COUNT(1)
+                FROM book_reviews br
+                WHERE br.book_id = :bookId
+                SQL,
+            ['bookId' => $bookId],
+            ['bookId' => Types::INTEGER]
+        );
+
+        return (int) $result->fetchOne();
+    }
+
+    /** @param mixed[] $result */
     private static function mapResultToDto(array $result): BookReview
     {
         return new BookReview(
@@ -63,7 +81,7 @@ final class BookReviewRepository
             (int) $result['rating'],
             $result['name'],
             $result['text'],
-            new \DateTimeImmutable($result['created_at'])
+            new DateTimeImmutable($result['created_at'])
         );
     }
 }

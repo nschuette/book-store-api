@@ -51,9 +51,10 @@ final class BookRepository
             throw BookNotFound::byBookId($bookId);
         }
 
-        return self::mapResultToDto(
-            $result->fetchAssociative()
-        );
+        $row = $result->fetchAssociative();
+        assert(is_array($row) === true);
+
+        return self::mapResultToDto($row);
     }
 
     /** @return array<int, Book> */
@@ -99,7 +100,7 @@ final class BookRepository
         return (int) $result->fetchOne();
     }
 
-    /** @param array<string, mixed> $result */
+    /** @param mixed[] $result */
     private static function mapResultToDto(array $result): Book
     {
         return new Book(
