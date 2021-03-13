@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Mezzio Skeleton coding standard">
-    <description>Lexicook coding standard</description>
-
+<ruleset name="Coding standard">
     <arg value="p"/>
     <arg name="extensions" value="php"/>
     <arg name="parallel" value="80"/>

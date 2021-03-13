@@ -10,6 +10,7 @@ return [
 
             // Repositories
             App\Repository\BookRepository::class => App\Repository\BookRepositoryFactory::class,
+            App\Repository\BookReviewRepository::class => App\Repository\BookReviewRepositoryFactory::class,
         ],
     ],
 ];
