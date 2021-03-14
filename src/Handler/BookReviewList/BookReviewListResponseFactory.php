@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Response;
+namespace App\Handler\BookReviewList;
 
 use App\Dto\Book;
 use App\Dto\BookReview;
@@ -13,7 +13,7 @@ use function sprintf;
 
 use const DATE_ATOM;
 
-final class BookReviewResponseFactory
+class BookReviewListResponseFactory
 {
     /** @param BookReview[] $bookReviews */
     public static function create(float $averageRating, int $count, Book $book, array $bookReviews): JsonResponse
@@ -35,11 +35,11 @@ final class BookReviewResponseFactory
     private static function formatReviews(BookReview $bookReview): array
     {
         return [
-            'id'        => $bookReview->getId(),
-            'rating'    => $bookReview->getRating(),
-            'name'      => $bookReview->getName(),
-            'text'      => $bookReview->getText(),
-            'createdAt' => $bookReview->getCreatedAt()->format(DATE_ATOM),
+            'id'         => $bookReview->getId(),
+            'rating'     => $bookReview->getRating(),
+            'name'       => $bookReview->getName(),
+            'text'       => $bookReview->getText(),
+            'created_at' => $bookReview->getCreatedAt()->format(DATE_ATOM),
         ];
     }
 

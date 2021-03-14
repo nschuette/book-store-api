@@ -4,13 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Handler\BookHandler;
-use App\Handler\BookListHandler;
-use App\Handler\BookReviewHandler;
-use App\Handler\PingHandler;
-use App\Repository\BookRepository;
-use App\Repository\BookReviewRepository;
-use Psr\Container\ContainerInterface;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 
 class ConfigProvider
 {
@@ -18,7 +12,7 @@ class ConfigProvider
     public function __invoke(): array
     {
         return [
-            'dependencies' => $this->getDependencies(),
+            'dependencies'  => $this->getDependencies(),
         ];
     }
 
@@ -27,27 +21,17 @@ class ConfigProvider
     {
         return [
             'factories'  => [
-                Handler\PingHandler::class => static function (ContainerInterface $container): PingHandler {
-                    return new PingHandler();
-                },
+                Handler\PingHandler::class => InvokableFactory::class,
 
-                Handler\BookListHandler::class => static function (ContainerInterface $container): BookListHandler {
-                    return new BookListHandler(
-                        $container->get(BookRepository::class)
-                    );
-                },
+                // Book list
+                Handler\BookList\BookListRequestMiddleware::class => InvokableFactory::class,
+                Handler\BookList\BookListHandler::class           => Handler\BookList\BookListHandlerFactory::class,
 
-                Handler\BookHandler::class => static function (ContainerInterface $container): BookHandler {
-                    return new BookHandler(
-                        $container->get(BookRepository::class),
-                    );
-                },
-                Handler\BookReviewHandler::class => static function (ContainerInterface $container): BookReviewHandler {
-                    return new BookReviewHandler(
-                        $container->get(BookRepository::class),
-                        $container->get(BookReviewRepository::class)
-                    );
-                },
+                // Book detail
+                Handler\BookDetail\BookDetailHandler::class => Handler\BookDetail\BookDetailHandlerFactory::class,
+
+                // Book review list
+                Handler\BookReviewList\BookReviewListHandler::class => Handler\BookReviewList\BookReviewListHandlerFactory::class,
             ],
         ];
     }

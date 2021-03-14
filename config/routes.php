@@ -9,7 +9,25 @@ use Psr\Container\ContainerInterface;
 return static function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
     $app->get('/api/ping', App\Handler\PingHandler::class, 'api.ping');
 
-    $app->get('/api/books', App\Handler\BookListHandler::class, 'api.books');
-    $app->get('/api/books/:bookId', App\Handler\BookHandler::class, 'api.books.book');
-    $app->get('/api/books/:bookId/reviews', App\Handler\BookReviewHandler::class, 'api.books.book.reviews');
+    $app->get(
+        '/api/books',
+        [
+            App\Handler\BookList\BookListRequestMiddleware::class,
+            App\Handler\BookList\BookListHandler::class,
+        ]
+    );
+
+    $app->get(
+        '/api/books/:bookId',
+        [
+            App\Handler\BookDetail\BookDetailHandler::class,
+        ]
+    );
+
+    $app->get(
+        '/api/books/:bookId/reviews',
+        [
+            App\Handler\BookReviewList\BookReviewListHandler::class,
+        ]
+    );
 };

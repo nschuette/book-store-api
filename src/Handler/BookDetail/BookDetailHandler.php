@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Handler;
+namespace App\Handler\BookDetail;
 
 use App\Exception\BookNotFound;
 use App\Repository\BookRepository;
-use App\Response\BookResponseFactory;
 use App\Response\ErrorResponseFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class BookHandler implements RequestHandlerInterface
+class BookDetailHandler implements RequestHandlerInterface
 {
     public function __construct(
         private BookRepository $bookRepository
@@ -28,6 +27,6 @@ class BookHandler implements RequestHandlerInterface
             return ErrorResponseFactory::createFromException($exception, 404);
         }
 
-        return BookResponseFactory::create($book);
+        return BookDetailResponseFactory::create($book);
     }
 }
