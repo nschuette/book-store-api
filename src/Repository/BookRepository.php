@@ -10,6 +10,7 @@ use App\Dto\Genre;
 use App\Dto\Price;
 use App\Exception\BookNotFound;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Types\Types;
 
 use function array_map;
@@ -58,29 +59,34 @@ final class BookRepository
     }
 
     /** @return array<int, Book> */
-    public function getAll(): array
+    public function getAll(?string $sortBy, string $order): array
     {
-        $result = $this->connection->executeQuery(
-            <<<'SQL'
-                SELECT 
-                    b.id AS book_id,
-                    b.isbn AS isbn,
-                    b.title AS title,
-                    a.id AS author_id,
-                    a.firstname AS author_firstname,
-                    a.lastname AS author_lastname,
-                    g.id AS genre_id,
-                    g.name AS genre_name,
-                    b.year AS year,
-                    b.description AS description,
-                    b.price AS price_total,
-                    b.tax AS price_tax,
-                    b.currency AS price_currency
-                FROM books b
-                INNER JOIN authors a ON a.id = b.author_id
-                INNER JOIN genres g ON g.id = b.genre_id
-                SQL
-        );
+        $queryBuilder = $this->connection->createQueryBuilder();
+        $queryBuilder->select([
+            'b.id AS book_id',
+            'b.isbn AS isbn',
+            'b.title AS title',
+            'a.id AS author_id',
+            'a.firstname AS author_firstname',
+            'a.lastname AS author_lastname',
+            'g.id AS genre_id',
+            'g.name AS genre_name',
+            'b.year AS year',
+            'b.description AS description',
+            'b.price AS price_total',
+            'b.tax AS price_tax',
+            'b.currency AS price_currency',
+        ]);
+        $queryBuilder->from('books', 'b');
+        $queryBuilder->innerJoin('b', 'authors', 'a', 'a.id = b.author_id');
+        $queryBuilder->innerJoin('b', 'genres', 'g', 'g.id = b.genre_id');
+
+        if ($sortBy !== null) {
+            $queryBuilder->orderBy($sortBy, $order);
+        }
+
+        $result = $queryBuilder->execute();
+        assert($result instanceof Result);
 
         return array_map(
             static fn (array $row): Book => self::mapResultToDto($row),

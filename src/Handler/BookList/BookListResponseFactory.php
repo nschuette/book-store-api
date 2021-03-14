@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Response;
+namespace App\Handler\BookList;
 
 use App\Dto\Author;
 use App\Dto\Book;
@@ -10,25 +10,38 @@ use App\Dto\Genre;
 use App\Dto\Price;
 use Laminas\Diactoros\Response\JsonResponse;
 
+use function array_map;
 use function sprintf;
 
-final class BookResponseFactory
+class BookListResponseFactory
 {
-    public static function create(Book $book): JsonResponse
+    /** @param Book[] $books */
+    public static function create(int $count, array $books): JsonResponse
     {
         return new JsonResponse([
-            'id'          => $book->getId(),
-            'isbn'        => $book->getIsbn(),
-            'author'      => self::formatAuthor($book->getAuthor()),
-            'genre'       => self::formatGenre($book->getGenre()),
-            'year'        => $book->getYear(),
-            'description' => $book->getDescription(),
-            'price'       => self::formatPrice($book->getPrice()),
-            'links'       => [
-                'list'    => self::formatLink('GET', '/api/books'),
-                'reviews' => self::formatLink('GET', sprintf('/api/books/%d/reviews', $book->getId())),
-            ],
+            'books'         => array_map(
+                static fn (Book $book): array => self::formatBook($book),
+                $books
+            ),
+            'total_results' => $count,
         ]);
+    }
+
+    /** @return mixed[] */
+    private static function formatBook(Book $book): array
+    {
+        return [
+            'id'     => $book->getId(),
+            'isbn'   => $book->getIsbn(),
+            'title'  => $book->getTitle(),
+            'author' => self::formatAuthor($book->getAuthor()),
+            'genre'  => self::formatGenre($book->getGenre()),
+            'year'   => $book->getYear(),
+            'price'  => self::formatPrice($book->getPrice()),
+            'links'  => [
+                'detail' => self::formatLink('GET', sprintf('/api/books/%d', $book->getId())),
+            ],
+        ];
     }
 
     /** @return mixed[] */
