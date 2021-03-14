@@ -1,4 +1,4 @@
-#REST-Api example with Laminas Mezzio
+# REST-Api example with Laminas Mezzio
 This is a small example project to show how to implement an REST-Api with Laminas Mezzio.
 
 ## Run application
