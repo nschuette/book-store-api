@@ -6,8 +6,10 @@ namespace App\Exception;
 
 use Exception;
 
-final class InvalidRequest extends Exception
+final class InvalidRequest extends Exception implements ErrorResponse
 {
+    private const STATUS_CODE_BAD_REQUEST = 400;
+
     /** @var array<int, array<string, string>> */
     private array $errors;
 
@@ -35,8 +37,13 @@ final class InvalidRequest extends Exception
         return new self($errors);
     }
 
+    public function getStatus(): int
+    {
+        return self::STATUS_CODE_BAD_REQUEST;
+    }
+
     /** @return array<int, array<string, string>> */
-    public function getErrors(): array
+    public function getErrors(): ?array
     {
         return $this->errors;
     }

@@ -8,7 +8,7 @@ use Exception;
 
 use function sprintf;
 
-final class BookNotFound extends Exception
+final class BookNotFound extends Exception implements ErrorResponse
 {
     private const MESSAGE_TEMPLATE = 'No book with id "%d" found!';
 
@@ -23,5 +23,15 @@ final class BookNotFound extends Exception
     public static function byBookId(int $bookId): self
     {
         return new self($bookId);
+    }
+
+    public function getStatus(): int
+    {
+        return 404;
+    }
+
+    public function getErrors(): ?array
+    {
+        return null;
     }
 }

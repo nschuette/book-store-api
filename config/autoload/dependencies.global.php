@@ -6,7 +6,8 @@ return [
     'dependencies' => [
         'factories'  => [
             // Infrastructure
-            Doctrine\DBAL\Connection::class => App\Infrastructure\ConnectionFactory::class,
+            Doctrine\DBAL\Connection::class                  => App\Infrastructure\ConnectionFactory::class,
+            \Mezzio\Middleware\ErrorResponseGenerator::class => App\Infrastructure\Middleware\ErrorResponseGeneratorFactory::class,
 
             // Repositories
             App\Repository\BookRepository::class => App\Repository\BookRepositoryFactory::class,
