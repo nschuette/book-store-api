@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Handler\BookList;
 
 use App\Repository\BookRepository;
-use App\Response\ErrorResponseFactory;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -25,15 +23,11 @@ class BookListHandler implements RequestHandlerInterface
         $bookListRequest = $request->getAttribute(BookListRequest::class);
         assert($bookListRequest instanceof BookListRequest);
 
-        try {
-            $bookCount = $this->bookRepository->getNumberOfBooks();
-            $books     = $this->bookRepository->getAll(
-                $bookListRequest->getSortBy(),
-                $bookListRequest->getOrder()
-            );
-        } catch (Exception $exception) {
-            return ErrorResponseFactory::createFromException($exception);
-        }
+        $bookCount = $this->bookRepository->getNumberOfBooks();
+        $books     = $this->bookRepository->getAll(
+            $bookListRequest->getSortBy(),
+            $bookListRequest->getOrder()
+        );
 
         return BookListResponseFactory::create(
             $bookCount,

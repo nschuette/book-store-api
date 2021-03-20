@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Handler\BookDetail;
 
-use App\Exception\BookNotFound;
 use App\Repository\BookRepository;
-use App\Response\ErrorResponseFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -21,11 +19,7 @@ class BookDetailHandler implements RequestHandlerInterface
     {
         $bookId = (int) $request->getAttribute('bookId');
 
-        try {
-            $book = $this->bookRepository->getById($bookId);
-        } catch (BookNotFound $exception) {
-            return ErrorResponseFactory::createFromException($exception, 404);
-        }
+        $book = $this->bookRepository->getById($bookId);
 
         return BookDetailResponseFactory::create($book);
     }
