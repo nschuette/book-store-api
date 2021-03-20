@@ -13,20 +13,19 @@ $cacheConfig = [
 ];
 
 $aggregator = new ConfigAggregator([
+    \Laminas\InputFilter\ConfigProvider::class,
+    \Laminas\Filter\ConfigProvider::class,
     Mezzio\Router\LaminasRouter\ConfigProvider::class,
     Laminas\Router\ConfigProvider::class,
     Laminas\HttpHandlerRunner\ConfigProvider::class,
     Laminas\Validator\ConfigProvider::class,
     // Include cache configuration
     new ArrayProvider($cacheConfig),
-
     Mezzio\Helper\ConfigProvider::class,
     Mezzio\ConfigProvider::class,
     Mezzio\Router\ConfigProvider::class,
     Laminas\Diactoros\ConfigProvider::class,
-
     App\ConfigProvider::class,
-
     // Load application config in a pre-defined order in such a way that local settings
     // overwrite global settings. (Loaded as first to last):
     //   - `global.php`
