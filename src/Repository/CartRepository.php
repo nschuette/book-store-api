@@ -10,11 +10,15 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Types;
 
+use function assert;
+use function is_array;
+
 final class CartRepository
 {
     public function __construct(
         public Connection $connection
-    ) {}
+    ) {
+    }
 
     public function getById(int $cartId): Cart
     {
@@ -59,7 +63,7 @@ final class CartRepository
     }
 
     /** @param mixed[] $result */
-    private static function mapResultToDto($result): Cart
+    private static function mapResultToDto(array $result): Cart
     {
         return new Cart(
             (int) $result['cart_id'],

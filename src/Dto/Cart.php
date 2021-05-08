@@ -8,14 +8,15 @@ use DateTimeImmutable;
 
 final class Cart
 {
-    private const STATUS_CREATED = 'created';
+    private const STATUS_CREATED  = 'created';
     private const STATUS_COMPLETE = 'complete';
 
     public function __construct(
         private int $id,
         private string $status,
         private DateTimeImmutable $createdAt
-    ) {}
+    ) {
+    }
 
     public function getId(): int
     {

@@ -10,7 +10,8 @@ final class Author
         private int $id,
         private string $firstname,
         private string $lastname
-    ) {}
+    ) {
+    }
 
     public function getId(): int
     {

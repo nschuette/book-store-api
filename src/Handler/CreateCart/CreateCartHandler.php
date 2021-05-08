@@ -13,7 +13,8 @@ class CreateCartHandler implements RequestHandlerInterface
 {
     public function __construct(
         private CartRepository $cartRepository
-    ) {}
+    ) {
+    }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

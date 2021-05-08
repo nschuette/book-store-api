@@ -30,6 +30,7 @@ final class CartNotFound extends Exception implements ErrorResponse
         return 404;
     }
 
+    /** @return array<int, array<string, string>>|null */
     public function getErrors(): ?array
     {
         return null;

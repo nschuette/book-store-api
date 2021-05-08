@@ -10,6 +10,8 @@ use App\Dto\Genre;
 use App\Dto\Price;
 use Laminas\Diactoros\Response\JsonResponse;
 
+use function sprintf;
+
 class BookDetailResponseFactory
 {
     public static function create(Book $book): JsonResponse

@@ -15,7 +15,8 @@ final class BookReview
         private string $name,
         private string $text,
         private DateTimeImmutable $createdAt
-    ) {}
+    ) {
+    }
 
     public function getId(): int
     {

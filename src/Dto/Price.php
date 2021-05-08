@@ -10,7 +10,8 @@ final class Price
         private float $total,
         private float $tax,
         private string $currency
-    ) {}
+    ) {
+    }
 
     public function getTotal(): float
     {

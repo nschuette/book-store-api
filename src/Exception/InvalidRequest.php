@@ -42,7 +42,7 @@ final class InvalidRequest extends Exception implements ErrorResponse
         return self::STATUS_CODE_BAD_REQUEST;
     }
 
-    /** @return array<int, array<string, string>> */
+    /** @return array<int, array<string, string>>|null */
     public function getErrors(): ?array
     {
         return $this->errors;

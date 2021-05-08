@@ -6,6 +6,8 @@ namespace App\Handler\CreateCart;
 
 use Laminas\Diactoros\Response\RedirectResponse;
 
+use function sprintf;
+
 class CreateCartResponseFactory
 {
     private const CART_DETAIL_URI = '/api/cart/%d';

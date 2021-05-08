@@ -13,6 +13,14 @@
             <property name="ignoreBlankLines" value="false"/>
         </properties>
     </rule>
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <!-- set soft line length limit to 150 characters -->
+            <property name="lineLimit" value="150"/>
+            <!-- set hard line length limit to 160 characters -->
+            <property name="absoluteLineLimit" value="160"/>
+        </properties>
+    </rule>
 
     <file>src</file>
     <file>test</file>

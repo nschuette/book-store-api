@@ -15,7 +15,8 @@ final class BookReviewRepository
 {
     public function __construct(
         private Connection $connection
-    ) {}
+    ) {
+    }
 
     /** @return array<int, BookReview> */
     public function getByBookId(int $bookId): array

@@ -14,12 +14,15 @@ use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Types\Types;
 
 use function array_map;
+use function assert;
+use function is_array;
 
 final class BookRepository
 {
     public function __construct(
         private Connection $connection
-    ) {}
+    ) {
+    }
 
     public function getById(int $bookId): Book
     {

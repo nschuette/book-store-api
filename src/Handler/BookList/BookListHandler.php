@@ -9,14 +9,17 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+use function assert;
+
 class BookListHandler implements RequestHandlerInterface
 {
     public const ALLOWED_SORT_BY_FIELDS = ['title', 'year'];
-    public const ALLOWED_ORDERINGS = ['asc', 'desc'];
+    public const ALLOWED_ORDERINGS      = ['asc', 'desc'];
 
     public function __construct(
         private BookRepository $bookRepository
-    ) {}
+    ) {
+    }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

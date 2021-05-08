@@ -15,7 +15,8 @@ final class Book
         private int $year,
         private ?string $description,
         private Price $price
-    ) {}
+    ) {
+    }
 
     public function getId(): int
     {
