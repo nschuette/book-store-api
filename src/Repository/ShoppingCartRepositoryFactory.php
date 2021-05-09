@@ -7,11 +7,11 @@ namespace App\Repository;
 use Doctrine\DBAL\Connection;
 use Psr\Container\ContainerInterface;
 
-final class CartRepositoryFactory
+final class ShoppingCartRepositoryFactory
 {
-    public function __invoke(ContainerInterface $container): CartRepository
+    public function __invoke(ContainerInterface $container): ShoppingCartRepository
     {
-        return new CartRepository(
+        return new ShoppingCartRepository(
             $container->get(Connection::class)
         );
     }

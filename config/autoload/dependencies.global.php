@@ -12,7 +12,7 @@ return [
             // Repositories
             App\Repository\BookRepository::class       => App\Repository\BookRepositoryFactory::class,
             App\Repository\BookReviewRepository::class => App\Repository\BookReviewRepositoryFactory::class,
-            App\Repository\CartRepository::class       => App\Repository\CartRepositoryFactory::class,
+            App\Repository\ShoppingCartRepository::class       => App\Repository\ShoppingCartRepositoryFactory::class,
         ],
     ],
 ];

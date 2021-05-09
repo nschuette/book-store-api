@@ -6,7 +6,7 @@ namespace App\Dto;
 
 use DateTimeImmutable;
 
-final class Cart
+final class ShoppingCart
 {
     private const STATUS_CREATED  = 'created';
     private const STATUS_COMPLETE = 'complete';

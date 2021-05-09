@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Handler\CartDetail;
+namespace App\Handler\ShoppingCartDetail;
 
-use App\Dto\Cart;
+use App\Dto\ShoppingCart;
 use Laminas\Diactoros\Response\JsonResponse;
 
-class CartDetailResponseFactory
+class ShoppingCartDetailResponseFactory
 {
-    public static function create(Cart $cart): JsonResponse
+    public static function create(ShoppingCart $cart): JsonResponse
     {
         return new JsonResponse([
             'cart_id'   => $cart->getId(),

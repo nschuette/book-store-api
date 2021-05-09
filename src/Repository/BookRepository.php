@@ -10,7 +10,6 @@ use App\Dto\Genre;
 use App\Dto\Price;
 use App\Exception\BookNotFound;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Types\Types;
 
 use function array_map;
@@ -88,8 +87,7 @@ final class BookRepository
             $queryBuilder->orderBy($sortBy, $order);
         }
 
-        $result = $queryBuilder->execute();
-        assert($result instanceof Result);
+        $result = $queryBuilder->executeQuery();
 
         return array_map(
             static fn (array $row): Book => self::mapResultToDto($row),

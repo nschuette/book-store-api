@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Dto\Cart;
-use App\Exception\CartNotFound;
+use App\Dto\ShoppingCart;
+use App\Exception\ShoppingCartNotFound;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Types;
@@ -13,30 +13,30 @@ use Doctrine\DBAL\Types\Types;
 use function assert;
 use function is_array;
 
-final class CartRepository
+final class ShoppingCartRepository
 {
     public function __construct(
         public Connection $connection
     ) {
     }
 
-    public function getById(int $cartId): Cart
+    public function getById(int $shoppingCartId): ShoppingCart
     {
         $result = $this->connection->executeQuery(
             <<<'SQL'
                 SELECT
-                    c.id as cart_id,
+                    c.id as shopping_cart_id,
                     c.status AS status,
                     c.created_at AS created_at
-                FROM carts c
-                WHERE c.id = :cartId
+                FROM shopping_carts c
+                WHERE c.id = :shoppingCartId
                 SQL,
-            ['cartId' => $cartId],
-            ['cartId' => Types::INTEGER]
+            ['shoppingCartId' => $shoppingCartId],
+            ['shoppingCartId' => Types::INTEGER]
         );
 
         if ($result->rowCount() === 0) {
-            throw CartNotFound::byCartId($cartId);
+            throw ShoppingCartNotFound::byShoppingCartId($shoppingCartId);
         }
 
         $row = $result->fetchAssociative();
@@ -48,7 +48,7 @@ final class CartRepository
     public function createNew(): int
     {
         $this->connection->insert(
-            'carts',
+            'shopping_carts',
             [
                 'status'     => 'created',
                 'created_at' => new DateTimeImmutable('now'),
@@ -63,10 +63,10 @@ final class CartRepository
     }
 
     /** @param mixed[] $result */
-    private static function mapResultToDto(array $result): Cart
+    private static function mapResultToDto(array $result): ShoppingCart
     {
-        return new Cart(
-            (int) $result['cart_id'],
+        return new ShoppingCart(
+            (int) $result['shopping_cart_id'],
             $result['status'],
             new DateTimeImmutable($result['created_at'])
         );

@@ -8,21 +8,21 @@ use Exception;
 
 use function sprintf;
 
-final class CartNotFound extends Exception implements ErrorResponse
+final class ShoppingCartNotFound extends Exception implements ErrorResponse
 {
-    private const MESSAGE_TEMPLATE = 'No cart with id "%d" found!';
+    private const MESSAGE_TEMPLATE = 'No shopping cart with id "%d" found!';
 
-    private function __construct(int $cartId)
+    private function __construct(int $shoppingCartId)
     {
         parent::__construct(
-            sprintf(self::MESSAGE_TEMPLATE, $cartId),
+            sprintf(self::MESSAGE_TEMPLATE, $shoppingCartId),
             1616329235
         );
     }
 
-    public static function byCartId(int $cartId): self
+    public static function byShoppingCartId(int $shoppingCartId): self
     {
-        return new self($cartId);
+        return new self($shoppingCartId);
     }
 
     public function getStatus(): int

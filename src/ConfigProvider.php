@@ -34,10 +34,10 @@ class ConfigProvider
                 Handler\BookReviewList\BookReviewListHandler::class => Handler\BookReviewList\BookReviewListHandlerFactory::class,
 
                 // Create new cart
-                Handler\CreateCart\CreateCartHandler::class => Handler\CreateCart\CreateCartHandlerFactory::class,
+                Handler\CreateShoppingCart\CreateShoppingCartHandler::class => Handler\CreateShoppingCart\CreateShoppingCartHandlerFactory::class,
 
                 // Cart detail
-                Handler\CartDetail\CartDetailHandler::class => Handler\CartDetail\CartDetailHandlerFactory::class,
+                Handler\ShoppingCartDetail\ShoppingCartDetailHandler::class => Handler\ShoppingCartDetail\ShoppingCartDetailHandlerFactory::class,
             ],
         ];
     }

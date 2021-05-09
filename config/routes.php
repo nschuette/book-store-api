@@ -32,15 +32,15 @@ return static function (Application $app, MiddlewareFactory $factory, ContainerI
     );
 
     $app->post(
-        '/api/cart',
+        '/api/shopping_cart',
         [
-            App\Handler\CreateCart\CreateCartHandler::class,
+            App\Handler\CreateShoppingCart\CreateShoppingCartHandler::class,
         ]
     );
     $app->get(
-        '/api/cart/:cartId',
+        '/api/shopping_cart/:shoppingCartId',
         [
-            App\Handler\CartDetail\CartDetailHandler::class,
+            App\Handler\ShoppingCartDetail\ShoppingCartDetailHandler::class,
         ]
     );
 };
