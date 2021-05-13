@@ -8,8 +8,9 @@ use DateTimeImmutable;
 
 final class ShoppingCart
 {
-    private const STATUS_CREATED  = 'created';
-    private const STATUS_COMPLETE = 'complete';
+    public const STATUS_CREATED  = 'created';
+    public const STATUS_COMPLETE = 'complete';
+    public const STATUS_CANCELED = 'canceled';
 
     public function __construct(
         private int $id,
@@ -23,14 +24,19 @@ final class ShoppingCart
         return $this->id;
     }
 
-    public function isCreated(): bool
+    public function getStatus(): string
     {
-        return $this->status === self::STATUS_CREATED;
+        return $this->status;
     }
 
     public function isComplete(): bool
     {
         return $this->status === self::STATUS_COMPLETE;
+    }
+
+    public function isCanceled(): bool
+    {
+        return $this->status === self::STATUS_CANCELED;
     }
 
     public function getCreatedAt(): DateTimeImmutable

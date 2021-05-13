@@ -50,7 +50,7 @@ final class ShoppingCartRepository
         $this->connection->insert(
             'shopping_carts',
             [
-                'status'     => 'created',
+                'status'     => ShoppingCart::STATUS_CREATED,
                 'created_at' => new DateTimeImmutable('now'),
             ],
             [

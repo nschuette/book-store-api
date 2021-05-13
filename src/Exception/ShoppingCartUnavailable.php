@@ -8,15 +8,15 @@ use Exception;
 
 use function sprintf;
 
-final class ShoppingCartNotFound extends Exception implements ErrorResponse
+class ShoppingCartUnavailable extends Exception implements ErrorResponse
 {
-    private const MESSAGE_TEMPLATE = 'No shopping cart with id "%d" found!';
+    private const MESSAGE_TEMPLATE = 'The shopping cart with id "%d" is unavailable. Either it is complete or has been canceled!';
 
-    private function __construct(int $shoppingShoppingCartId)
+    private function __construct(int $shoppingCartId)
     {
         parent::__construct(
-            sprintf(self::MESSAGE_TEMPLATE, $shoppingShoppingCartId),
-            1616329235
+            sprintf(self::MESSAGE_TEMPLATE, $shoppingCartId),
+            1616352222
         );
     }
 
