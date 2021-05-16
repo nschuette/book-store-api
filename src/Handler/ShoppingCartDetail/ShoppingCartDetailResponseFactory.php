@@ -6,7 +6,10 @@ namespace App\Handler\ShoppingCartDetail;
 
 use App\Dto\ShoppingCart;
 use App\Dto\ShoppingCartItem;
+use App\Infrastructure\Util\MoneyUtil;
 use Laminas\Diactoros\Response\JsonResponse;
+use Money\Currency;
+use Money\Money;
 
 use function array_map;
 use function array_reduce;
@@ -33,14 +36,8 @@ class ShoppingCartDetailResponseFactory
         return [
             'book_id'  => $shoppingCartItem->getBookId(),
             'quantity' => $shoppingCartItem->getQuantity(),
-            'price'    => self::formatMoney(
-                $shoppingCartItem->getPrice()->getTotal(),
-                $shoppingCartItem->getPrice()->getCurrency()
-            ),
-            'tax'      => self::formatMoney(
-                $shoppingCartItem->getPrice()->getTax(),
-                $shoppingCartItem->getPrice()->getCurrency()
-            ),
+            'price'    => self::formatMoney($shoppingCartItem->getPrice()),
+            'tax'      => self::formatMoney($shoppingCartItem->getTax()),
         ];
     }
 
@@ -53,32 +50,32 @@ class ShoppingCartDetailResponseFactory
     {
         $price = array_reduce(
             $shoppingCartItems,
-            static function (float $sum, ShoppingCartItem $shoppingCartItem): float {
-                return $sum += $shoppingCartItem->getPrice()->getTotal() * $shoppingCartItem->getQuantity();
+            static function (Money $sum, ShoppingCartItem $shoppingCartItem): Money {
+                return $sum->add($shoppingCartItem->getPrice()->multiply($shoppingCartItem->getQuantity()));
             },
-            0.00
+            new Money(0, new Currency('EUR'))
         );
 
         $tax = array_reduce(
             $shoppingCartItems,
-            static function (float $sum, ShoppingCartItem $shoppingCartItem): float {
-                return $sum += $shoppingCartItem->getPrice()->getTax() * $shoppingCartItem->getQuantity();
+            static function (Money $sum, ShoppingCartItem $shoppingCartItem): Money {
+                return $sum->add($shoppingCartItem->getTax()->multiply($shoppingCartItem->getQuantity()));
             },
-            0.00
+            new Money(0, new Currency('EUR'))
         );
 
         return [
-            'price' => self::formatMoney($price, 'EUR'),
-            'tax'   => self::formatMoney($tax, 'EUR'),
+            'price' => self::formatMoney($price),
+            'tax'   => self::formatMoney($tax),
         ];
     }
 
     /** @return mixed[] */
-    private static function formatMoney(float $amount, string $currency): array
+    private static function formatMoney(Money $money): array
     {
         return [
-            'amount'   => $amount,
-            'currency' => $currency,
+            'amount'   => MoneyUtil::formatToFloat($money),
+            'currency' => $money->getCurrency()->getCode(),
         ];
     }
 }

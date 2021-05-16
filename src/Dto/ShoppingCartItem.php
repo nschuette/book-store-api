@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Dto;
 
 use DateTimeImmutable;
+use Money\Money;
 
 final class ShoppingCartItem
 {
@@ -12,7 +13,8 @@ final class ShoppingCartItem
         private int $id,
         private int $shoppingCartId,
         private int $bookId,
-        private Price $price,
+        private Money $price,
+        private Money $tax,
         private int $quantity,
         private DateTimeImmutable $createdAt,
         private ?DateTimeImmutable $updatedAt = null,
@@ -34,9 +36,14 @@ final class ShoppingCartItem
         return $this->bookId;
     }
 
-    public function getPrice(): Price
+    public function getPrice(): Money
     {
         return $this->price;
+    }
+
+    public function getTax(): Money
+    {
+        return $this->tax;
     }
 
     public function getQuantity(): int
