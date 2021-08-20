@@ -15,6 +15,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+use function implode;
+use function sprintf;
+
 class BookListRequestMiddleware implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
@@ -57,9 +60,9 @@ class BookListRequestMiddleware implements MiddlewareInterface
                                     'Invalid sort field given. Allowed are: %s',
                                     implode(', ', BookListHandler::ALLOWED_SORT_BY_FIELDS)
                                 ),
-                            ]
+                            ],
                         ],
-                    ]
+                    ],
                 ],
             ],
             'order'   => [
@@ -79,9 +82,9 @@ class BookListRequestMiddleware implements MiddlewareInterface
                                     'Invalid ordering given. Allowed are: %s',
                                     implode(', ', BookListHandler::ALLOWED_ORDERINGS)
                                 ),
-                            ]
+                            ],
                         ],
-                    ]
+                    ],
                 ],
             ],
         ]);

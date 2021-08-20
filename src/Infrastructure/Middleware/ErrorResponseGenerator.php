@@ -10,9 +10,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;
 
+use function array_filter;
+use function time;
+
 class ErrorResponseGenerator
 {
-    private const DEFAULT_STATUS = 500;
+    private const DEFAULT_STATUS  = 500;
     private const DEFAULT_MESSAGE = 'Internal Server Error';
 
     public function __invoke(

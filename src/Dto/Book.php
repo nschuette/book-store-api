@@ -4,32 +4,26 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
+use Money\Money;
+
 final class Book
 {
     public function __construct(
         private int $id,
-        private string $isbn,
-        private string $title,
         private Author $author,
         private Genre $genre,
-        private int $year,
+        private string $isbn,
+        private string $title,
         private ?string $description,
-        private Price $price
-    ) {}
+        private int $year,
+        private Money $price,
+        private Money $tax
+    ) {
+    }
 
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getIsbn(): string
-    {
-        return $this->isbn;
-    }
-
-    public function getTitle(): string
-    {
-        return $this->title;
     }
 
     public function getAuthor(): Author
@@ -42,9 +36,14 @@ final class Book
         return $this->genre;
     }
 
-    public function getYear(): int
+    public function getIsbn(): string
     {
-        return $this->year;
+        return $this->isbn;
+    }
+
+    public function getTitle(): string
+    {
+        return $this->title;
     }
 
     public function getDescription(): ?string
@@ -52,8 +51,18 @@ final class Book
         return $this->description;
     }
 
-    public function getPrice(): Price
+    public function getYear(): int
+    {
+        return $this->year;
+    }
+
+    public function getPrice(): Money
     {
         return $this->price;
+    }
+
+    public function getTax(): Money
+    {
+        return $this->tax;
     }
 }

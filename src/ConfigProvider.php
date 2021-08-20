@@ -32,6 +32,12 @@ class ConfigProvider
 
                 // Book review list
                 Handler\BookReviewList\BookReviewListHandler::class => Handler\BookReviewList\BookReviewListHandlerFactory::class,
+
+                // Create new cart
+                Handler\CreateShoppingCart\CreateShoppingCartHandler::class => Handler\CreateShoppingCart\CreateShoppingCartHandlerFactory::class,
+
+                // Cart detail
+                Handler\ShoppingCartDetail\ShoppingCartDetailHandler::class => Handler\ShoppingCartDetail\ShoppingCartDetailHandlerFactory::class,
             ],
         ];
     }

@@ -15,7 +15,8 @@ class BookReviewListHandler implements RequestHandlerInterface
     public function __construct(
         private BookRepository $bookRepository,
         private BookReviewRepository $bookReviewRepository,
-    ) {}
+    ) {
+    }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {

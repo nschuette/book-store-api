@@ -7,19 +7,21 @@ namespace App\Repository;
 use App\Dto\Author;
 use App\Dto\Book;
 use App\Dto\Genre;
-use App\Dto\Price;
 use App\Exception\BookNotFound;
+use App\Infrastructure\Util\MoneyUtil;
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Types\Types;
 
 use function array_map;
+use function assert;
+use function is_array;
 
 final class BookRepository
 {
     public function __construct(
         private Connection $connection
-    ) {}
+    ) {
+    }
 
     public function getById(int $bookId): Book
     {
@@ -36,9 +38,8 @@ final class BookRepository
                     g.name AS genre_name,
                     b.year AS year,
                     b.description AS description,
-                    b.price AS price_total,
-                    b.tax AS price_tax,
-                    b.currency AS price_currency
+                    b.price AS price,
+                    b.tax AS tax
                 FROM books b
                 INNER JOIN authors a ON a.id = b.author_id
                 INNER JOIN genres g ON g.id = b.genre_id
@@ -73,9 +74,8 @@ final class BookRepository
             'g.name AS genre_name',
             'b.year AS year',
             'b.description AS description',
-            'b.price AS price_total',
-            'b.tax AS price_tax',
-            'b.currency AS price_currency',
+            'b.price AS price',
+            'b.tax AS tax',
         ]);
         $queryBuilder->from('books', 'b');
         $queryBuilder->innerJoin('b', 'authors', 'a', 'a.id = b.author_id');
@@ -85,8 +85,7 @@ final class BookRepository
             $queryBuilder->orderBy($sortBy, $order);
         }
 
-        $result = $queryBuilder->execute();
-        assert($result instanceof Result);
+        $result = $queryBuilder->executeQuery();
 
         return array_map(
             static fn (array $row): Book => self::mapResultToDto($row),
@@ -111,8 +110,6 @@ final class BookRepository
     {
         return new Book(
             (int) $result['book_id'],
-            $result['isbn'],
-            $result['title'],
             new Author(
                 (int) $result['author_id'],
                 $result['author_firstname'],
@@ -122,13 +119,12 @@ final class BookRepository
                 (int) $result['genre_id'],
                 $result['genre_name']
             ),
-            (int) $result['year'],
+            $result['isbn'],
+            $result['title'],
             $result['description'],
-            new Price(
-                (float) $result['price_total'],
-                (float) $result['price_tax'],
-                $result['price_currency']
-            )
+            (int) $result['year'],
+            MoneyUtil::parseString($result['price']),
+            MoneyUtil::parseString($result['tax'])
         );
     }
 }

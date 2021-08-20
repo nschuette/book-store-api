@@ -9,7 +9,8 @@ final class BookListRequest
     private function __construct(
         private ?string $sortBy = null,
         private string $order,
-    ) {}
+    ) {
+    }
 
     /** @param array<string, string> $queryParams */
     public static function createFromArray(array $queryParams): self
