@@ -7,8 +7,9 @@ namespace App\Handler\BookList;
 use App\Dto\Author;
 use App\Dto\Book;
 use App\Dto\Genre;
-use App\Dto\Price;
+use App\Infrastructure\Util\MoneyUtil;
 use Laminas\Diactoros\Response\JsonResponse;
+use Money\Money;
 
 use function array_map;
 use function sprintf;
@@ -37,7 +38,8 @@ class BookListResponseFactory
             'author' => self::formatAuthor($book->getAuthor()),
             'genre'  => self::formatGenre($book->getGenre()),
             'year'   => $book->getYear(),
-            'price'  => self::formatPrice($book->getPrice()),
+            'price'  => self::formatMoney($book->getPrice()),
+            'tax'    => self::formatMoney($book->getTax()),
             'links'  => [
                 'detail' => self::formatLink('GET', sprintf('/api/books/%d', $book->getId())),
             ],
@@ -64,12 +66,11 @@ class BookListResponseFactory
     }
 
     /** @return mixed[] */
-    private static function formatPrice(Price $price): array
+    private static function formatMoney(Money $money): array
     {
         return [
-            'total'    => $price->getTotal(),
-            'tax'      => $price->getTax(),
-            'currency' => $price->getCurrency(),
+            'amount'   => MoneyUtil::formatToFloat($money),
+            'currency' => $money->getCurrency()->getCode(),
         ];
     }
 

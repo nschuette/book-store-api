@@ -13,7 +13,8 @@ class BookDetailHandler implements RequestHandlerInterface
 {
     public function __construct(
         private BookRepository $bookRepository
-    ) {}
+    ) {
+    }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
