@@ -8,7 +8,7 @@ use Exception;
 
 use function sprintf;
 
-class ShoppingCartUnavailable extends Exception implements ErrorResponse
+final class ShoppingCartUnavailable extends Exception implements ErrorResponse
 {
     private const MESSAGE_TEMPLATE = 'The shopping cart with id "%d" is unavailable. Either it is complete or has been canceled!';
 
