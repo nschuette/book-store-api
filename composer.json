@@ -36,7 +36,8 @@
         "moneyphp/money": "^3.3",
         "psr/container": "^1.0",
         "psr/http-message": "^1.0",
-        "psr/http-server-handler": "^1.0"
+        "psr/http-server-handler": "^1.0",
+        "symfony/console": "^5.3"
     },
     "require-dev": {
         "doctrine/coding-standard": "^8.2",
