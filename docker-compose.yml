@@ -5,8 +5,7 @@ services:
     build:
       context: .
     environment:
-      # Enable ext-intl
-      PHP_EXTENSION_INTL: 1
+      - PHP_EXTENSIONS=intl
     volumes:
       - .:/var/www/html
     depends_on:
@@ -32,5 +31,17 @@ services:
     restart: always
     ports:
       - 8000:8080
+    networks:
+      - default
+
+  redoc:
+    image: redocly/redoc
+    volumes:
+      - ./openapi/bookstore-api.yaml:/usr/share/nginx/html/bookstore-api.yaml
+    environment:
+      PAGE_TITLE: "Bookstore API documentation"
+      SPEC_URL: "bookstore-api.yaml"
+    ports:
+      - 8001:80
     networks:
       - default

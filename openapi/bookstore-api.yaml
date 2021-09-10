@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: Bookstore API
+  version: '0.1'
+  description: |
+    This is a sample server Petstore server.
+    You can find out more about Swagger at
+    [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).
+    For this sample, you can use the api key `special-key` to test the authorization filters.
+tags:
+  - name: Base
+    description: Basic API routes
+  - name: Books
+    description: Everything about books
+servers:
+  - url: localhost:8080/api
+    description: Development server
+paths:
+  /ping:
+    get:
+      summary: Ping
+      tags:
+        - Base
+      description: Short introduction ep
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ack:
+                    type: integer
+                    description: Current time represented as UNIX timestamp
+  /books:
+    get:
+      summary: Book list
+      tags:
+        - Books
+      description: Provides a list of all books
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  books:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        isbn:
+                          type: string
+                        title:
+                          type: string
+                        author:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            firstname:
+                              type: string
+                            lastname:
+                              type: string
+                        genre:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                        year:
+                          type: integer
+
+                    example:
+                      - id: 23
+                        isbn: 0-6910-6335-4
+                        title: My first book
+                        author:
+                          id: 1
+                          firstname: John
+                          lastname: Doe
+                        genre:
+                          id: 1
+                          name: Thriller
+                  total_results:
+                    type: integer
