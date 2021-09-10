@@ -4,9 +4,6 @@ services:
   app:
     build:
       context: .
-    environment:
-      # Enable ext-intl
-      PHP_EXTENSION_INTL: 1
     volumes:
       - .:/var/www/html
     depends_on:

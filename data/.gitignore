@@ -2,3 +2,6 @@
 !cache
 !cache/.gitkeep
 !.gitignore
+!migrations/
+!migrations/.gitkeep
+!migrations/Version*
