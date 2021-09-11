@@ -23,11 +23,11 @@ final class Version20210910201250 extends AbstractMigration
             <<<'SQL'
                 CREATE TABLE books (
                     id int unsigned NOT NULL AUTO_INCREMENT,
-                    isbn varchar(13) COLLATE utf8mb4_general_ci NOT NULL,
+                    isbn varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
                     title varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
                     author_id int unsigned NOT NULL,
                     genre_id int unsigned NOT NULL,
-                    year date NOT NULL,
+                    year smallint unsigned NOT NULL,
                     description tinytext COLLATE utf8mb4_general_ci NOT NULL,
                     price varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
                     tax varchar(20) COLLATE utf8mb4_general_ci NOT NULL,

@@ -6,6 +6,7 @@ namespace App\Infrastructure\Util;
 
 use Money\Currencies\ISOCurrencies;
 use Money\Formatter\DecimalMoneyFormatter;
+use Money\Formatter\IntlMoneyFormatter;
 use Money\Money;
 use Money\Parser\IntlMoneyParser;
 use NumberFormatter;
@@ -30,5 +31,15 @@ class MoneyUtil
         $moneyFormatter = new DecimalMoneyFormatter($currencies);
 
         return (float) $moneyFormatter->format($money);
+    }
+
+    public static function formatToString(Money $money): string
+    {
+        $currencies = new ISOCurrencies();
+
+        $numberFormatter = new NumberFormatter(self::LOCALE, NumberFormatter::CURRENCY);
+        $moneyFormatter  = new IntlMoneyFormatter($numberFormatter, $currencies);
+
+        return $moneyFormatter->format($money);
     }
 }
