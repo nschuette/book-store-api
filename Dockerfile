@@ -2,7 +2,8 @@ FROM thecodingmachine/php:8.0-v4-apache
 
 ENV TEMPLATE_PHP_INI="production"
 
-ENV APACHE_DOCUMENT_ROOT="public/"
+ENV APACHE_DOCUMENT_ROOT="public/" \
+    PHP_EXTENSION_INTL=1
 
 COPY . /var/www/html/
 RUN sudo chown -R docker:docker /var/www/html/
