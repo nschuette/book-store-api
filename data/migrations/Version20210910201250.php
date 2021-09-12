@@ -28,7 +28,7 @@ final class Version20210910201250 extends AbstractMigration
                     author_id int unsigned NOT NULL,
                     genre_id int unsigned NOT NULL,
                     year smallint unsigned NOT NULL,
-                    description tinytext COLLATE utf8mb4_general_ci NOT NULL,
+                    description text COLLATE utf8mb4_general_ci NOT NULL,
                     price varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
                     tax varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
                     PRIMARY KEY (id),

@@ -22,7 +22,7 @@ final class Version20210910200234 extends AbstractMigration
         $this->addSql(
             <<<'SQL'
                 CREATE TABLE genres (
-                    id int unsigned NOT NULL AUTO_INCREMENT,
+                    id int unsigned NOT NULL,
                     name varchar(80) NOT NULL,
                     PRIMARY KEY (id)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci

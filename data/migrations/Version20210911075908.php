@@ -14,14 +14,14 @@ use Doctrine\Migrations\AbstractMigration;
 final class Version20210911075908 extends AbstractMigration
 {
     private const GENRES = [
-        'Krimi',
-        'Fantasy',
-        'Science-Fiction',
-        'Liebesromane',
-        'Familienromane',
-        'Reiseromane',
-        'Thriller',
-        'Sachbücher'
+        1 => 'Krimi',
+        2 => 'Fantasy',
+        3 => 'Science-Fiction',
+        4 => 'Liebesromane',
+        5 => 'Familienromane',
+        6 => 'Reiseromane',
+        7 => 'Thriller',
+        8 => 'Sachbücher'
     ];
 
     public function getDescription(): string
@@ -31,14 +31,21 @@ final class Version20210911075908 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        foreach (self::GENRES as $genre) {
+        foreach (self::GENRES as $id => $genre) {
             $this->addSql(
                 <<<'SQL'
                     INSERT INTO genres
-                    SET name = :genre
+                    SET id   = :id,
+                        name = :genre
                     SQL,
-                ['genre' => $genre],
-                ['genre' => Types::STRING]
+                [
+                    'id'    => $id,
+                    'genre' => $genre
+                ],
+                [
+                    'id'    => Types::INTEGER,
+                    'genre' => Types::STRING
+                ]
             );
         }
     }

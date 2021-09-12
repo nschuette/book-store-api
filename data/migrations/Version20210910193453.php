@@ -22,7 +22,7 @@ final class Version20210910193453 extends AbstractMigration
         $this->addSql(
             <<<'SQL'
                 CREATE TABLE authors (
-                    id int unsigned NOT NULL AUTO_INCREMENT,
+                    id int unsigned NOT NULL,
                     firstname varchar(80) COLLATE utf8mb4_general_ci NOT NULL,
                     lastname varchar(80) COLLATE utf8mb4_general_ci NOT NULL,
                     PRIMARY KEY (id)
